@@ -1,0 +1,27 @@
+H:\2A\IA et Robotique\TP_Genetique\bin\Debug\WindowsFormsApplication2.exe
+H:\2A\IA et Robotique\TP_Genetique\bin\Debug\WindowsFormsApplication2.pdb
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.csproj.AssemblyReference.cache
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.Form1.resources
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.Properties.Resources.resources
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.csproj.GenerateResource.cache
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.csproj.CoreCompileInputs.cache
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.exe
+H:\2A\IA et Robotique\TP_Genetique\obj\x86\Debug\WindowsFormsApplication2.pdb
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\WindowsFormsApplication2.csproj.AssemblyReference.cache
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\ProjetIA2022.Form1.resources
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\WindowsFormsApplication2.Properties.Resources.resources
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\WindowsFormsApplication2.csproj.GenerateResource.cache
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\WindowsFormsApplication2.csproj.CoreCompileInputs.cache
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\WindowsFormsApplication2.exe
+H:\2A\IAetRobotique\TP_PathFinder\obj\x86\Debug\WindowsFormsApplication2.pdb
+H:\2A\IAetRobotique\TP_PathFinder\bin\Debug\WindowsFormsApplication2.exe
+H:\2A\IAetRobotique\TP_PathFinder\bin\Debug\WindowsFormsApplication2.pdb
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\bin\Debug\WindowsFormsApplication2.exe
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\bin\Debug\WindowsFormsApplication2.pdb
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\WindowsFormsApplication2.csproj.AssemblyReference.cache
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\ProjetIA2022.Form1.resources
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\WindowsFormsApplication2.Properties.Resources.resources
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\WindowsFormsApplication2.csproj.GenerateResource.cache
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\WindowsFormsApplication2.csproj.CoreCompileInputs.cache
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\WindowsFormsApplication2.exe
+C:\Users\agonzalezpa\Downloads\ProjetIAv2\obj\x86\Debug\WindowsFormsApplication2.pdb
