@@ -149,7 +149,15 @@ namespace ProjetIA2022
             // NOTRE HEURISTIQUE
             // avec 6*sqrt(2)*(xf - xi) + 6*(yf - yi - d1)
                 int d = Math.Abs(Form1.xfinal - x);
-                double h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2,0.5) - 1));
+                int b = Math.Abs(Form1.yfinal - y);
+                double h;
+
+                if (d<b)
+                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2, 0.5) - 1)); }
+                else
+                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.xfinal - x) + b * (Math.Pow(2, 0.5) - 1)); }
+
+                return h;
                 
             // HEURISTIQUE DU PROF
                 double hProf = Math.Pow((Math.Pow((Form1.xfinal - x), 2) + Math.Pow((Form1.yfinal - y), 2)), 0.5);
