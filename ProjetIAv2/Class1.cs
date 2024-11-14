@@ -146,8 +146,15 @@ namespace ProjetIA2022
             // Form1.matrice[x,y] indique le type de case : 1 pour départementale, 2 pour nationale
             // 3 pour autoroute et 8 pour recharge ; -1 dans la matrice est une case inaccessible
     
-            return ( 0 );
-           
+            // NOTRE HEURISTIQUE
+            // avec 6*sqrt(2)*(xf - xi) + 6*(yf - yi - d1)
+                int d = Math.Abs(Form1.xfinal - x);
+                double h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2,0.5) - 1));
+                
+            // HEURISTIQUE DU PROF
+                double hProf = Math.Pow((Math.Pow((Form1.xfinal - x), 2) + Math.Pow((Form1.yfinal - y), 2)), 0.5);
+
+            return h;
         }
 
         public override string ToString()
