@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,7 +22,7 @@ namespace ProjetIA2022
         static public int yinitial;
         static public int xfinal;
         static public int yfinal;
-         public const int autoroute = 3;
+        public const int autoroute = 3;
         public const int nationale = 2;
         public const int departementale = 1;
         public const int recharge = 8;
@@ -31,7 +31,7 @@ namespace ProjetIA2022
         public const int tempscasedepartementale = 20; // 20 mn par case
         public const int tempscaserecharge = 30; // 30mn pour passer de 0 à 100 en énergie
         public const int consoparcase = 6;  // 6% Donc 16 cases maximum de déplacement sans recharge
-        public List<Point> powerstations = null;
+        static public List<Point> powerstations = null;
 
         static Graphics g;
         public Form1()
