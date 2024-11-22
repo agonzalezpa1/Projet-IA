@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,13 +140,13 @@ namespace ProjetIA2022
             // Accès à certaines constantes :
             // Form1.tempscaseautoroute  : 10mn par déplacement d'1 case sur autoroute
             //  Form1.tempscasenationale  : 15mn par déplacement d'1 case sur nationale
-           //   Form1.tempscasedepartementale : 20mn pour déplacement sur départementale
-           //   Form1.tempscaserecharge = 30; // 30mn pour passer de 0 à 100 en énergie
+            //   Form1.tempscasedepartementale : 20mn pour déplacement sur départementale
+            //   Form1.tempscaserecharge = 30; // 30mn pour passer de 0 à 100 en énergie
             // et proportionnellement moins si on a déjà de l'énergie
             // Form1.matrice[x,y] indique le type de case : 1 pour départementale, 2 pour nationale
             // 3 pour autoroute et 8 pour recharge ; -1 dans la matrice est une case inaccessible
-    
-            // NOTRE HEURISTIQUE
+
+            /* NOTRE HEURISTIQUE
             // avec 6*sqrt(2)*(xf - xi) + 6*(yf - yi - d1)
                 int d = Math.Abs(Form1.xfinal - x);
                 int b = Math.Abs(Form1.yfinal - y);
@@ -160,7 +160,66 @@ namespace ProjetIA2022
                 return h;
                 
             // HEURISTIQUE DU PROF
-                double hProf = Math.Pow((Math.Pow((Form1.xfinal - x), 2) + Math.Pow((Form1.yfinal - y), 2)), 0.5);
+                //double hProf = Math.Pow((Math.Pow((Form1.xfinal - x), 2) + Math.Pow((Form1.yfinal - y), 2)), 0.5);
+
+                //return h;*/
+
+            /*if(Form1.xfinal > Form1.powerstations[0].X && Form1.yfinal > Form1.powerstations[0].Y)
+            {
+                int d = Math.Abs(Form1.xfinal - Form1.powerstations[0].X);
+                int b = Math.Abs(Form1.yfinal - Form1.powerstations[0].Y);
+                double h;
+
+                if (d < b)
+                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2, 0.5) - 1)); }
+                else
+                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.xfinal - x) + b * (Math.Pow(2, 0.5) - 1)); }
+
+                return h;
+            }
+            else
+            {
+                int d = Math.Abs(Form1.xfinal - x);
+                int b = Math.Abs(Form1.yfinal - y);
+                double h;
+
+                if (d < b)
+                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2, 0.5) - 1)); }
+                else
+                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.xfinal - x) + b * (Math.Pow(2, 0.5) - 1)); }
+
+                return h;
+            }*/
+
+     
+            double h;
+            double distanceManhattanEnMieux = CalculeCout(x, y, Form1.xfinal, Form1.yfinal);
+
+            double energyRestanteALArrivee = energy - distanceManhattanEnMieux*Form1.consoparcase;
+
+            if (energyRestanteALArrivee < 0)
+            {
+                h = Form1.tempscasedepartementale * (CalculeCout(x, y, Form1.powerstations[0].X, Form1.powerstations[0].Y) + CalculeCout(Form1.powerstations[0].X, Form1.powerstations[0].Y, Form1.xfinal, Form1.yfinal));
+            }
+            else
+            {
+                h = Form1.tempscasedepartementale * distanceManhattanEnMieux;
+            }
+
+            return h;
+        }
+
+        private double CalculeCout(int xactuel, int yactuel, int xfinal, int yfinal)
+        {
+            double h;
+            int distHorizontale = Math.Abs(xfinal - xactuel);
+            int distVerticale = Math.Abs(yfinal - yactuel);
+       
+
+            if (distHorizontale < distVerticale)
+            { h = distVerticale + distHorizontale * (Math.Pow(2, 0.5) - 1); }
+            else
+            { h = distHorizontale + distVerticale * (Math.Pow(2, 0.5) - 1); }
 
             return h;
         }
