@@ -224,6 +224,30 @@ namespace ProjetIA2022
             return h;
         }
 
+        private Point SelectionnerPowerStation (int xactuel,int  yactuel, int xfinal, int yfinal,int  energy )
+        {
+            Point powerstationSelectionnee;
+            minDistanceArrivee = 40;
+        
+            foreach (Point powerstation in Form1.powerstations)
+            {
+                double distanceManhattanEnMieux = CalculeCout(xactuel, yactuel, powerstation.X, powerstation.Y);
+                double energyRestanteALArrivee = energy - distanceManhattanEnMieux * Form1.consoparcase;
+        
+                if (energyRestanteALArrivee >= 0)
+                {
+                    distanceArrivee = CalculeCout(powerstation.X, powerstation.Y, xfinal, yfinal);
+                    if(distanceArrivee < minDistanceArrivee)
+                    {
+                        minDistanceArrivee = distanceArrivee;
+                        powerstationSelectionnee = powerstation;
+                    }
+                }
+            }
+            return powerstationSelectionnee
+        }    
+        
+
         public override string ToString()
         {
             return Convert.ToString(x)+","+ Convert.ToString(y)+","
