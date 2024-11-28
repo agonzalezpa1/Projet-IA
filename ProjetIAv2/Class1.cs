@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -199,11 +200,12 @@ namespace ProjetIA2022
 
             if (energyRestanteALArrivee < 0)
             {
-                h = Form1.tempscasedepartementale * (CalculeCout(x, y, Form1.powerstations[0].X, Form1.powerstations[0].Y) + CalculeCout(Form1.powerstations[0].X, Form1.powerstations[0].Y, Form1.xfinal, Form1.yfinal));
+                Point powerstation = SelectionnerPowerStation(x, y, energy);
+                h = Form1.tempscaseautoroute * (CalculeCout(x, y, powerstation.X, powerstation.Y) + CalculeCout(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
             }
             else
             {
-                h = Form1.tempscasedepartementale * distanceManhattanEnMieux;
+                h = Form1.tempscaseautoroute * distanceManhattanEnMieux;
             }
 
             return h;
@@ -224,29 +226,29 @@ namespace ProjetIA2022
             return h;
         }
 
-        private Point SelectionnerPowerStation (int xactuel,int  yactuel, int xfinal, int yfinal,int  energy )
+        private Point SelectionnerPowerStation(int xactuel, int yactuel, double energy)
         {
-            Point powerstationSelectionnee;
-            minDistanceArrivee = 40;
-        
+            Point powerstationSelectionnee = new Point();
+            double minDistanceArrivee = 40;
+
             foreach (Point powerstation in Form1.powerstations)
             {
                 double distanceManhattanEnMieux = CalculeCout(xactuel, yactuel, powerstation.X, powerstation.Y);
                 double energyRestanteALArrivee = energy - distanceManhattanEnMieux * Form1.consoparcase;
-        
+
                 if (energyRestanteALArrivee >= 0)
                 {
-                    distanceArrivee = CalculeCout(powerstation.X, powerstation.Y, xfinal, yfinal);
-                    if(distanceArrivee < minDistanceArrivee)
+                    double distanceArrivee = CalculeCout(xactuel, yactuel, powerstation.X, powerstation.Y) + CalculeCout(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal);
+                    if (distanceArrivee < minDistanceArrivee)
                     {
                         minDistanceArrivee = distanceArrivee;
                         powerstationSelectionnee = powerstation;
                     }
                 }
             }
-            return powerstationSelectionnee
-        }    
-        
+
+            return powerstationSelectionnee;
+        }
 
         public override string ToString()
         {
