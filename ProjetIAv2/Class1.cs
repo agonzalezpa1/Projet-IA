@@ -194,6 +194,16 @@ namespace ProjetIA2022
 
      
             double h;
+
+            int vitesse = Form1.tempscasenationale;
+
+            int distHorizontale = Math.Abs(Form1.xfinal - x);
+            int distVerticale = Math.Abs(Form1.yfinal - y);
+            
+            if (distVerticale > distHorizontale)
+            { if (y >= 15 || Form1.yfinal >= 15)
+              {vitesse = Form1.tempscaseautoroute; }}
+            
             double distanceManhattanEnMieux = CalculeCout(x, y, Form1.xfinal, Form1.yfinal);
 
             double energyRestanteALArrivee = energy - distanceManhattanEnMieux*Form1.consoparcase;
