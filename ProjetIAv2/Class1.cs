@@ -199,23 +199,33 @@ namespace ProjetIA2022
 
             int distHorizontale = Math.Abs(Form1.xfinal - x);
             int distVerticale = Math.Abs(Form1.yfinal - y);
-            
+
+            /* en fonction de où on est on applique la vitesse des autoroutes ou des nationales
             if (distVerticale > distHorizontale)
             { if (y >= 15 || Form1.yfinal >= 15)
-              {vitesse = Form1.tempscaseautoroute; }}
-            
+              {vitesse = Form1.tempscaseautoroute; }}*/
+
+            /* en fonction de où on est on applique la vitesse des autoroutes ou des nationales
+            if (distVerticale > distHorizontale)
+            { 
+                if (y >= 19 || Form1.yfinal >= 19)
+                {
+                    vitesse = Form1.tempscaseautoroute;
+                }
+            }*/
+
             double distanceManhattanEnMieux = CalculeCout(x, y, Form1.xfinal, Form1.yfinal);
 
-            double energyRestanteALArrivee = energy - distanceManhattanEnMieux*Form1.consoparcase;
+            double energieRestanteALArrivee = energy - distanceManhattanEnMieux*Form1.consoparcase;
 
-            if (energyRestanteALArrivee < 0)
+            if (energieRestanteALArrivee < 0)
             {
                 Point powerstation = SelectionnerPowerStation(x, y, energy);
-                h = Form1.tempscaseautoroute * (CalculeCout(x, y, powerstation.X, powerstation.Y) + CalculeCout(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
+                h = vitesse * (CalculeCout(x, y, powerstation.X, powerstation.Y) + CalculeCout(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
             }
             else
             {
-                h = Form1.tempscaseautoroute * distanceManhattanEnMieux;
+                h = vitesse * distanceManhattanEnMieux;
             }
 
             return h;
