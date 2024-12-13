@@ -124,7 +124,6 @@ namespace ProjetIA2022
             return lsucc;
         }
 
-
         public override double CalculeHCost()
         {
             // C'est ici qu'il faut écrire le code de vos heuristiques et retourner une valeur
@@ -147,96 +146,64 @@ namespace ProjetIA2022
             // Form1.matrice[x,y] indique le type de case : 1 pour départementale, 2 pour nationale
             // 3 pour autoroute et 8 pour recharge ; -1 dans la matrice est une case inaccessible
 
-            /* NOTRE HEURISTIQUE
-            // avec 6*sqrt(2)*(xf - xi) + 6*(yf - yi - d1)
-                int d = Math.Abs(Form1.xfinal - x);
-                int b = Math.Abs(Form1.yfinal - y);
-                double h;
-
-                if (d<b)
-                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2, 0.5) - 1)); }
-                else
-                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.xfinal - x) + b * (Math.Pow(2, 0.5) - 1)); }
-
-                return h;
-                
-            // HEURISTIQUE DU PROF
-                //double hProf = Math.Pow((Math.Pow((Form1.xfinal - x), 2) + Math.Pow((Form1.yfinal - y), 2)), 0.5);
-
-                //return h;*/
-
-            /*if(Form1.xfinal > Form1.powerstations[0].X && Form1.yfinal > Form1.powerstations[0].Y)
-            {
-                int d = Math.Abs(Form1.xfinal - Form1.powerstations[0].X);
-                int b = Math.Abs(Form1.yfinal - Form1.powerstations[0].Y);
-                double h;
-
-                if (d < b)
-                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2, 0.5) - 1)); }
-                else
-                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.xfinal - x) + b * (Math.Pow(2, 0.5) - 1)); }
-
-                return h;
-            }
-            else
-            {
-                int d = Math.Abs(Form1.xfinal - x);
-                int b = Math.Abs(Form1.yfinal - y);
-                double h;
-
-                if (d < b)
-                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.yfinal - y) + d * (Math.Pow(2, 0.5) - 1)); }
-                else
-                { h = Form1.tempscasedepartementale * (Math.Abs(Form1.xfinal - x) + b * (Math.Pow(2, 0.5) - 1)); }
-
-                return h;
-            }*/
-
-     
             double h;
 
+            // VITESSE DE REFERENCE POUR L'ENVIRONNEMENT
+            //dans l'environnement C, on se base sur le temps de la nationale
             int vitesse = Form1.tempscasenationale;
+            //si on est dans l'environnement A et B, on utilise le temps de la départementale
+            if (Form1.powerstations.Count() <= 1)
+            {
+                vitesse = Form1.tempscasedepartementale;
+            }
 
+            //DISTANCES
             int distHorizontale = Math.Abs(Form1.xfinal - x);
             int distVerticale = Math.Abs(Form1.yfinal - y);
+            double distanceManhattanEnMieux = CalculeDistanceManhattanEnMieux(x, y, Form1.xfinal, Form1.yfinal);
 
-            /* en fonction de où on est on applique la vitesse des autoroutes ou des nationales
-            if (distVerticale > distHorizontale)
-            { if (y >= 15 || Form1.yfinal >= 15)
-              {vitesse = Form1.tempscaseautoroute; }}*/
-
-            /* en fonction de où on est on applique la vitesse des autoroutes ou des nationales
-            if (distVerticale > distHorizontale)
-            { 
-                if (y >= 19 || Form1.yfinal >= 19)
-                {
-                    vitesse = Form1.tempscaseautoroute;
-                }
-            }*/
-
-            double distanceManhattanEnMieux = CalculeCout(x, y, Form1.xfinal, Form1.yfinal);
-
-            double energieRestanteALArrivee = energy - distanceManhattanEnMieux*Form1.consoparcase;
-
-            if (energieRestanteALArrivee < 0)
+            // on ne rentre dans ce if QUE si on est dans l'environnement C car il faut qu'un des points observés est sur l'autoroute
+            // donc c'est imperméable aux environnements A et B
+            if (((Form1.matrice[Form1.xfinal, Form1.yfinal] == 3) || (Form1.matrice[x, y] == 3)) && (distHorizontale < distVerticale))
             {
-                Point powerstation = SelectionnerPowerStation(x, y, energy);
-                h = vitesse * (CalculeCout(x, y, powerstation.X, powerstation.Y) + CalculeCout(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
+                h = CalculeTemps(x, y, Form1.xfinal, Form1.yfinal);
             }
             else
             {
+                //environnements A et B passent toujours par là
                 h = vitesse * distanceManhattanEnMieux;
+            }
+
+            double energieRestanteALArrivee = energy - distanceManhattanEnMieux * Form1.consoparcase;
+
+            //imperméable à l'environnement A
+            if ((Form1.powerstations.Count() > 0) && (energieRestanteALArrivee < 0))
+            {
+                // si on est dans l'environnement B avec une seule powerstation, SelectionnerPowerStation retourne cette powerstation
+                Point powerstation = SelectionnerPowerStation(x, y, energy);
+                if (powerstation != new Point())
+                {
+                    //le if est imperméable aux environnements A et B
+                    if (((Form1.matrice[Form1.xfinal, Form1.yfinal] == 3) || (Form1.matrice[x, y] == 3)) && (distHorizontale < distVerticale))
+                    {
+                        h = CalculeTemps(x, y, powerstation.X, powerstation.Y) + CalculeTemps(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal);
+                    }
+                    else
+                    {
+                        h = vitesse * (CalculeDistanceManhattanEnMieux(x, y, powerstation.X, powerstation.Y) + CalculeDistanceManhattanEnMieux(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
+                    }
+                }
             }
 
             return h;
         }
 
-        private double CalculeCout(int xactuel, int yactuel, int xfinal, int yfinal)
+        private double CalculeDistanceManhattanEnMieux(int xactuel, int yactuel, int xfinal, int yfinal)
         {
             double h;
             int distHorizontale = Math.Abs(xfinal - xactuel);
             int distVerticale = Math.Abs(yfinal - yactuel);
-       
+
 
             if (distHorizontale < distVerticale)
             { h = distVerticale + distHorizontale * (Math.Pow(2, 0.5) - 1); }
@@ -246,6 +213,14 @@ namespace ProjetIA2022
             return h;
         }
 
+        private double CalculeTemps(int xactuel, int yactuel, int xfinal, int yfinal)
+        {
+            int coteducarre = Math.Abs(xfinal - xactuel);
+            double tempsdiagonale = Form1.tempscasenationale * Math.Sqrt(2) * coteducarre;
+            double tempsrestant = Form1.tempscaseautoroute * (Math.Abs(yfinal - yactuel) - coteducarre);
+            return tempsdiagonale + tempsrestant;
+        }
+
         private Point SelectionnerPowerStation(int xactuel, int yactuel, double energy)
         {
             Point powerstationSelectionnee = new Point();
@@ -253,12 +228,12 @@ namespace ProjetIA2022
 
             foreach (Point powerstation in Form1.powerstations)
             {
-                double distanceManhattanEnMieux = CalculeCout(xactuel, yactuel, powerstation.X, powerstation.Y);
+                double distanceManhattanEnMieux = CalculeDistanceManhattanEnMieux(xactuel, yactuel, powerstation.X, powerstation.Y);
                 double energyRestanteALArrivee = energy - distanceManhattanEnMieux * Form1.consoparcase;
 
                 if (energyRestanteALArrivee >= 0)
                 {
-                    double distanceArrivee = CalculeCout(xactuel, yactuel, powerstation.X, powerstation.Y) + CalculeCout(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal);
+                    double distanceArrivee = CalculeDistanceManhattanEnMieux(xactuel, yactuel, powerstation.X, powerstation.Y) + CalculeDistanceManhattanEnMieux(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal);
                     if (distanceArrivee < minDistanceArrivee)
                     {
                         minDistanceArrivee = distanceArrivee;
@@ -272,8 +247,8 @@ namespace ProjetIA2022
 
         public override string ToString()
         {
-            return Convert.ToString(x)+","+ Convert.ToString(y)+","
-                   +Convert.ToString(Math.Round(energy));
+            return Convert.ToString(x) + "," + Convert.ToString(y) + ","
+                   + Convert.ToString(Math.Round(energy));
         }
     }
 }
