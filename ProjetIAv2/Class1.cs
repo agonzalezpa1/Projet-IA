@@ -185,15 +185,37 @@ namespace ProjetIA2022
                 if (powerstation != new Point())
                 {
                     //le if est imperméable aux environnements A et B
+                    
+                    /* TEST 1 : distance diagonale + ligne droite en prenant en compte l'autoroute
                     if (((Form1.matrice[Form1.xfinal, Form1.yfinal] == 3) || (Form1.matrice[x, y] == 3)) && (distHorizontale < distVerticale))
                     {
                         h = CalculeTemps(x, y, powerstation.X, powerstation.Y) + CalculeTemps(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal);
-                    }
-                    else
+                    } */
+
+                    /* TEST 2 : distance euclidienne en multipliant par le temps de l'autoroute au lieu du temps de la nationale
+                    if (((Form1.matrice[Form1.xfinal, Form1.yfinal] == 4) || (Form1.matrice[x, y] == 4)) && (distHorizontale < distVerticale))
                     {
+                        h = Form1.tempscaseautoroute * (CalculeDistanceEuclidienne(x, y, powerstation.X, powerstation.Y) + CalculeDistanceEuclidienne(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
+                    }*/
+
+                    /*TEST 3 :
+                    if (Form1.matrice[18, 0] == 3)
+                    { 
+                        if ((Form1.matrice[Form1.xfinal, Form1.yfinal] >= 15) || (Form1.matrice[x, y] >= 15))
+                        {
+                            h = Form1.tempscaseautoroute * (CalculeDistanceEuclidienne(x, y, powerstation.X, powerstation.Y) + CalculeDistanceEuclidienne(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
+                        }
+                        else
+                        {
+                            h = vitesse * (CalculeDistanceEuclidienne(x, y, powerstation.X, powerstation.Y) + CalculeDistanceEuclidienne(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
+                        }
+                    }*/
+
+                    /*else
+                    {*/
                         //h = vitesse * (CalculeDistanceManhattanEnMieux(x, y, powerstation.X, powerstation.Y) + CalculeDistanceManhattanEnMieux(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
                         h = vitesse * (CalculeDistanceEuclidienne(x, y, powerstation.X, powerstation.Y) + CalculeDistanceEuclidienne(powerstation.X, powerstation.Y, Form1.xfinal, Form1.yfinal));
-                    }
+                    //}
                 }
             }
 
